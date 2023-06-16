@@ -1,0 +1,19 @@
+from gensim.summarization import summarize
+
+# List of documents
+documents = [
+    "Document 1 content...",
+    "Document 2 content...",
+    "Document 3 content...",
+    # Add more documents here...
+    "Document 10 content..."
+]
+
+# Loop through the documents and summarize each one
+for i, doc in enumerate(documents):
+    doc_summary = summarize(doc)
+    print(f"Summary of Document {i+1}:")
+    print(doc_summary)
+    print('-' * 50)
+
+# CREATED WITH THE HELP OF OPEN-AI CHAT GPT: https://chat.openai.com/chat
