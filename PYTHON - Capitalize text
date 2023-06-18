@@ -1,0 +1,10 @@
+def capitalize_text(text):
+    capitalized_text = text.capitalize()
+    return capitalized_text
+
+# Example usage
+input_text = input("Enter some text: ")
+capitalized_text = capitalize_text(input_text)
+print("Capitalized text:", capitalized_text)
+
+# CREATED WITH THE HELP OF OPEN-AI CHAT GPT: https://chat.openai.com/chat
