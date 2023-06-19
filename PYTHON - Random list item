@@ -1,0 +1,14 @@
+import random
+
+def choose_random_item(items):
+    if len(items) == 0:
+        return None
+    else:
+        return random.choice(items)
+
+# Example usage
+my_list = ['apple', 'banana', 'orange', 'grape', 'kiwi']
+random_item = choose_random_item(my_list)
+print("Random item from the list:", random_item)
+
+# CREATED WITH THE HELP OF OPEN-AI CHAT GPT: https://chat.openai.com/chat
