@@ -1,0 +1,55 @@
+import requests
+from bs4 import BeautifulSoup
+import random
+import datetime
+
+def get_motivational_quote():
+    # Fetch the Wikiquote page
+    url = 'https://en.wikiquote.org/wiki/Motivational_quotes'
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content, 'html.parser')
+
+    # Extract all the quotes
+    quotes = []
+    quote_elements = soup.find_all('li')
+    for element in quote_elements:
+        quote = element.text.strip()
+        if quote and not quote.startswith(('[', '<', '−')):
+            quotes.append(quote)
+
+    # Select a random quote
+    random_quote = random.choice(quotes)
+    return random_quote
+
+def display_daily_quote():
+    # Get current date
+    today = datetime.date.today()
+
+    # Load stored date from file
+    try:
+        with open('quote_date.txt', 'r') as file:
+            stored_date = file.read()
+    except FileNotFoundError:
+        stored_date = None
+
+    # Compare stored date with current date
+    if stored_date != str(today):
+        # It's a new day, fetch a new quote
+        quote = get_motivational_quote()
+
+        # Display the quote
+        print("Motivational Quote of the Day:")
+        print(quote)
+        print()
+
+        # Save the current date
+        with open('quote_date.txt', 'w') as file:
+            file.write(str(today))
+    else:
+        # Quote already displayed for the day
+        print("You've already seen today's motivational quote.")
+
+# Run the code
+display_daily_quote()
+
+# CREATED WITH THE HELP OF OPEN-AI CHAT GPT: https://chat.openai.com/chat
