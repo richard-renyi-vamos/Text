@@ -1,0 +1,36 @@
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
+
+def create_pdf_from_text(text, output_file):
+    # Create a PDF file
+    c = canvas.Canvas(output_file, pagesize=letter)
+
+    # Set font properties
+    font_name = "Helvetica"
+    font_size = 12
+
+    # Set the starting position for writing text
+    x = 50
+    y = 750
+
+    # Split the text into lines and write it to the PDF
+    for line in text.split('\n'):
+        c.setFont(font_name, font_size)
+        c.drawString(x, y, line)
+        y -= 20  # Move to the next line
+
+    # Save the PDF
+    c.save()
+
+if __name__ == "__main__":
+    input_text = """
+    This is a sample text.
+    It will be converted into a PDF.
+    Each line will be a separate line in the PDF.
+    """
+
+    output_filename = "output.pdf"
+    create_pdf_from_text(input_text, output_filename)
+    print(f"PDF created successfully. Saved as {output_filename}")
+
+# CREATED WITH THE HELP OF OPEN-AI CHAT GPT: https://chat.openai.com/chat
