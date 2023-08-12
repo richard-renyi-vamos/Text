@@ -1,0 +1,40 @@
+import torch
+from transformers import DistilBertTokenizer, DistilBertForSequenceClassification
+
+class EmotionDetector:
+    def __init__(self):
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.tokenizer = DistilBertTokenizer.from_pretrained("distilbert-base-uncased")
+        self.model = DistilBertForSequenceClassification.from_pretrained("distilbert-base-uncased", num_labels=3)
+        self.model.to(self.device)
+        self.model.eval()
+        
+        self.label_map = {0: "Negative", 1: "Neutral", 2: "Positive"}
+
+    def predict_emotion(self, text):
+        inputs = self.tokenizer(text, return_tensors="pt", truncation=True, padding=True)
+        inputs.to(self.device)
+        
+        with torch.no_grad():
+            outputs = self.model(**inputs)
+            logits = outputs.logits
+        
+        predicted_label = torch.argmax(logits, dim=1).item()
+        emotion = self.label_map[predicted_label]
+        return emotion
+
+def main():
+    detector = EmotionDetector()
+    
+    while True:
+        text = input("Enter text to analyze emotions (or type 'exit' to quit): ")
+        if text.lower() == "exit":
+            break
+        
+        emotion = detector.predict_emotion(text)
+        print(f"Detected Emotion: {emotion}\n")
+
+if __name__ == "__main__":
+    main()
+
+# CREATED WITH THE HELP OF OPEN-AI CHAT GPT: https://chat.openai.com/chat
