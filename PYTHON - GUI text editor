@@ -1,0 +1,50 @@
+import tkinter as tk
+from tkinter import filedialog, messagebox
+
+def new_file():
+    text.delete("1.0", tk.END)
+
+def open_file():
+    file_path = filedialog.askopenfilename(filetypes=[("Text Files", "*.txt"), ("All Files", "*.*")])
+    if file_path:
+        with open(file_path, "r") as file:
+            text.delete("1.0", tk.END)
+            text.insert("1.0", file.read())
+
+def save_file():
+    file_path = filedialog.asksaveasfilename(defaultextension=".txt", filetypes=[("Text Files", "*.txt"), ("All Files", "*.*")])
+    if file_path:
+        with open(file_path, "w") as file:
+            file.write(text.get("1.0", tk.END))
+
+def about():
+    messagebox.showinfo("About", "A simple text editor created using Python's Tkinter library.")
+
+root = tk.Tk()
+root.title("Simple Text Editor")
+
+text = tk.Text(root)
+text.pack(fill=tk.BOTH, expand=True)
+
+menu_bar = tk.Menu(root)
+
+file_menu = tk.Menu(menu_bar, tearoff=0)
+file_menu.add_command(label="New", command=new_file)
+file_menu.add_command(label="Open", command=open_file)
+file_menu.add_command(label="Save", command=save_file)
+file_menu.add_separator()
+file_menu.add_command(label="Exit", command=root.quit)
+
+menu_bar.add_cascade(label="File", menu=file_menu)
+
+help_menu = tk.Menu(menu_bar, tearoff=0)
+help_menu.add_command(label="About", command=about)
+
+menu_bar.add_cascade(label="Help", menu=help_menu)
+
+root.config(menu=menu_bar)
+
+root.mainloop()
+
+
+# CREATED WITH THE HELP OF OPEN-AI CHAT GPT: https://chat.openai.com/chat
