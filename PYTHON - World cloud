@@ -1,0 +1,18 @@
+import matplotlib.pyplot as plt
+from wordcloud import WordCloud
+from collections import Counter
+
+# Read your document
+with open('your_document.txt', 'r', encoding='utf-8') as file:
+    text = file.read()
+
+# Create a word cloud
+wordcloud = WordCloud(width=800, height=400, background_color='white').generate(text)
+
+# Display the word cloud using Matplotlib
+plt.figure(figsize=(10, 5))
+plt.imshow(wordcloud, interpolation='bilinear')
+plt.axis("off")
+plt.show()
+
+# CREATED WITH THE HELP OF OPEN-AI CHAT GPT: https://chat.openai.com/chat
