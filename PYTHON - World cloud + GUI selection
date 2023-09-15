@@ -1,0 +1,37 @@
+import tkinter as tk
+from tkinter import filedialog
+from wordcloud import WordCloud
+import matplotlib.pyplot as plt
+from PIL import ImageTk, Image
+
+def generate_word_cloud():
+    file_path = filedialog.askopenfilename(title="Select a text file")
+    
+    if not file_path:
+        return
+    
+    with open(file_path, 'r', encoding='utf-8', errors='ignore') as file:
+        text = file.read()
+
+    wordcloud = WordCloud(width=800, height=400, background_color='white').generate(text)
+
+    # Display the word cloud in the GUI
+    wordcloud_image = ImageTk.PhotoImage(Image.fromarray(wordcloud.to_array()))
+    wordcloud_label.config(image=wordcloud_image)
+    wordcloud_label.image = wordcloud_image
+
+# Create the main window
+root = tk.Tk()
+root.title("Word Cloud Generator")
+
+# Create a button to trigger word cloud generation
+generate_button = tk.Button(root, text="Generate Word Cloud", command=generate_word_cloud)
+generate_button.pack(pady=20)
+
+# Create a label to display the word cloud
+wordcloud_label = tk.Label(root)
+wordcloud_label.pack()
+
+root.mainloop()
+
+# CREATED WITH THE HELP OF OPEN-AI CHAT GPT: https://chat.openai.com/chat
