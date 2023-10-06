@@ -1,0 +1,70 @@
+import tkinter as tk
+from tkinter import messagebox
+import os
+import tkinter.font as tkFont
+
+# Function to save the current note to a file
+def save_note():
+    note_text = text_widget.get("1.0", "end-1c")
+    if not note_text:
+        messagebox.showinfo("Note", "No text to save.")
+        return
+
+    file_name = entry.get()
+    if not file_name:
+        messagebox.showinfo("Note", "Please enter a file name.")
+        return
+
+    with open(file_name, 'w') as file:
+        file.write(note_text)
+        messagebox.showinfo("Note", "Note saved successfully.")
+
+# Function to change text style
+def change_style():
+    font_name = font_name_var.get()
+    font_size = font_size_var.get()
+    text_widget.config(font=(font_name, font_size))
+
+# Create the main window
+root = tk.Tk()
+root.title("Note Taking App")
+
+# Entry for file name
+label = tk.Label(root, text="File Name:")
+label.pack()
+entry = tk.Entry(root)
+entry.pack()
+
+# Text widget for taking notes
+text_widget = tk.Text(root)
+text_widget.pack()
+
+# Save button
+save_button = tk.Button(root, text="Save Note", command=save_note)
+save_button.pack()
+
+# Font selection
+font_label = tk.Label(root, text="Text Style:")
+font_label.pack()
+
+font_name_var = tk.StringVar()
+font_size_var = tk.IntVar()
+
+font_name_label = tk.Label(root, text="Font:")
+font_name_label.pack()
+font_name_entry = tk.Entry(root, textvariable=font_name_var)
+font_name_entry.pack()
+
+font_size_label = tk.Label(root, text="Font Size:")
+font_size_label.pack()
+font_size_entry = tk.Entry(root, textvariable=font_size_var)
+font_size_entry.pack()
+
+font_change_button = tk.Button(root, text="Change Style", command=change_style)
+font_change_button.pack()
+
+# Main loop
+root.mainloop()
+
+
+ # CREATED WITH THE HELP OF OPEN-AI CHAT GPT: https://chat.openai.com/chat
